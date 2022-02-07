@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 const app = express();
 
 //import product routes
@@ -9,7 +8,7 @@ const productRoutes = require("./routes/product")
 require("dotenv-flow").config();
 
 //parse request content type JSON
-app.use(bodyParser.json());
+app.use(express.json());
 
 //connect to mongoDB
 mongoose.connect (
