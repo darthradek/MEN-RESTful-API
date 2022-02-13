@@ -2,7 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 
+const swaggerUi = require("swagger-ui-express");
+const yaml = require("yamljs");
+
+//setrup swagger
+const swaggerDefinition = yaml.load("./swagger.yaml");
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDefinition));
+
 //import product routes
+const authRoutes = require("./routes/auth")
 const productRoutes = require("./routes/product")
 
 require("dotenv-flow").config();
@@ -22,14 +30,14 @@ app.get("/api/welcome", (req, res)=>{
     res.status(200).send({message:"Welcome tot the MEN RESTful API"})
 });
 
-app.use("/api/products", productRoutes)
-
+app.use("/api/user", authRoutes);
+app.use("/api/products", productRoutes);
 
 //defining port
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, function(){
     console.log("Server is runsadning on port:" + PORT);
-})
+});
 
 module.exports = app;

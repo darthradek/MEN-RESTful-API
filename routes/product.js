@@ -1,10 +1,10 @@
 const router = require("express").Router();
 const product = require("../models/product");
-
+const { verifyToken } = require("../validation");
 //CRUD operations
 
 // Create product - post 
-router.post("/",(req, res) =>{
+router.post("/", verifyToken, (req, res) =>{
     data = req.body;
     product.insertMany(data)
     .then(data => {res.send(data);})
@@ -19,7 +19,7 @@ router.get("/",(req, res) =>{
 });
 
 //Read sall products that are in stock
-router.get("/in-stock",(req, res) =>{
+router.get("/in-stock",verifyToken,(req, res) =>{
     product.find({ inStock:true })
     .then(data => {res.send(data);})
     .catch(err => {res.status(500).send({message:err.message});})
@@ -35,7 +35,7 @@ router.get("/:id",(req, res) =>{
 
 
 //Update specific product - put
-router.put("/:id",(req, res) =>{
+router.put("/:id",verifyToken, (req, res) =>{
     const id = req.params.id
     product.findByIdAndUpdate(id, req.body)
     .then(data => {
@@ -59,7 +59,7 @@ router.put("/:id",(req, res) =>{
 
 
 //Delete specific product - delete
-router.delete("/:id",(req, res) =>{
+router.delete("/:id",verifyToken, (req, res) =>{
     const id = req.params.id
     product.findByIdAndDelete(id)
     .then(data => {
