@@ -46,6 +46,8 @@ paths:
 
   /user/register:
     post:
+      tags:
+        - User
       summary: Register a new User
       description: Register a new User in the database
       requestBody:
@@ -70,6 +72,8 @@ paths:
 
   /user/login:
     post:
+      tags:
+        - User
       summary: Login a User
       description: Login a User in order to get JWT token (auth-token)
       requestBody:
@@ -97,10 +101,11 @@ paths:
                   data:
                     type: string
 
-
   /quotes:
     get:
-      summary: Retrieves a list of quotes
+      tags: 
+        - Quote
+      summary: Retrieves a list of all quotes
       description: Retrieves a list of quotes as JSON objects.
       responses:
         200:
@@ -111,8 +116,10 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Quote"
-    
+
     post:
+      tags:
+        - Quote
       summary: Create a new Quote
       description: Create a new Quote
       security:
@@ -134,6 +141,8 @@ paths:
   
   /quotes/{id}:
     get:
+      tags:
+        - Quote
       summary: Specific Quote
       description: Retrieves a specific Quote based on it id.
       parameters:
@@ -154,6 +163,8 @@ paths:
                   $ref: "#/components/schemas/Quote"
    
     put:
+      tags:
+        - Quote
       summary: Updates a specific Quote
       description: Updates a specific Quote based on it's id
       security:
@@ -181,6 +192,8 @@ paths:
                 $ref: "#/components/schemas/Quote"
 
     delete:
+      tags:
+        - Quote
       summary: Deletes a specific Quote
       description: Deletes a specific Quote based on it id
       security:
