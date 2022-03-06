@@ -11,7 +11,7 @@ app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDefinition));
 
 //import product routes
 const authRoutes = require("./routes/auth")
-const productRoutes = require("./routes/product")
+const quoteRoutes = require("./routes/quote")
 
 require("dotenv-flow").config();
 
@@ -31,7 +31,7 @@ app.get("/api/welcome", (req, res)=>{
 });
 
 app.use("/api/user", authRoutes);
-app.use("/api/products", productRoutes);
+app.use("/api/quotes", quoteRoutes);
 
 //defining port
 const PORT = process.env.PORT || 4000;

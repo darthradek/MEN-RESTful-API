@@ -1,59 +1,57 @@
 const router = require("express").Router();
-const product = require("../models/product");
+const quote = require("../models/quote");
 const { verifyToken } = require("../validation");
 //CRUD operations
 
-// Create product - post 
+// Create quote - post 
 router.post("/", verifyToken, (req, res) =>{
     data = req.body;
-    product.insertMany(data)
+    quote.insertMany(data)
     .then(data => {res.send(data);})
     .catch(err => {res.status(500).send({message:err.message});})
 });
 
-//Read all products - get
+//Read all quotes - get
 router.get("/",(req, res) =>{
-    product.find()
+    quote.find()
     .then(data => {res.send(data);})
     .catch(err => {res.status(500).send({message:err.message});})
 });
 
-//Read sall products that are in stock
-router.get("/in-stock",verifyToken,(req, res) =>{
-    product.find({ inStock:true })
+//Read all quotes that are in stock
+router.get("/is-active",verifyToken,(req, res) =>{
+    quote.find({ isActive:true })
     .then(data => {res.send(data);})
     .catch(err => {res.status(500).send({message:err.message});})
 });
 
-//Read specific product - get by id
+//Read specific quote - get by id
 router.get("/:id",(req, res) =>{
-    product.findById(req.params.id)
+    quote.findById(req.params.id)
     .then(data => {res.send(data);})
     .catch(err => {res.status(500).send({message:err.message});})
 });
 
-
-
-//Update specific product - put
+//Update specific quote - put
 router.put("/:id",verifyToken, (req, res) =>{
     const id = req.params.id
-    product.findByIdAndUpdate(id, req.body)
+    quote.findByIdAndUpdate(id, req.body)
     .then(data => {
         if(!data)
         {
             res.status(404).send(
-                { message:"Cannot update product with id="+id+". Maybe product was not found :(" }
+                { message:"Cannot update quote with id="+id+". Maybe quote was not found :(" }
             )
         }
         else 
         {
             res.send(
-                {message:"Product was succesfully updated"}
+                {message:"quote succesfully updated"}
             )
         }
     })
     .catch(err => {res.status(500).send(
-        {message:"Error updating product with id="+id});
+        {message:"Error updating quote with id="+id});
     })
 });  
 
@@ -61,23 +59,23 @@ router.put("/:id",verifyToken, (req, res) =>{
 //Delete specific product - delete
 router.delete("/:id",verifyToken, (req, res) =>{
     const id = req.params.id
-    product.findByIdAndDelete(id)
+    quote.findByIdAndDelete(id)
     .then(data => {
         if(!data)
         {
             res.status(404).send(
-                { message:"Cannot delete product with id="+id+". Maybe product was not found :(" }
+                { message:"Cannot delete quote with id="+id+". Maybe quote was not found :(" }
             )
         }
         else 
         {
             res.send(
-                {message:"Product was succesfully deleted"}
+                {message:"Quote succesfully deleted"}
             )
         }
     })
     .catch(err => {res.status(500).send(
-        {message:"Error deleting product with id="+id});
+        {message:"Error deleting quote with id="+id});
     })
 });  
 
