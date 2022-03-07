@@ -18,16 +18,24 @@ require("dotenv-flow").config();
 //parse request content type JSON
 app.use(express.json());
 
+// Handle CORS
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "auth-token, Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+
 //connect to mongoDB
-mongoose.connect (
-    process.env.DBHOST,  { useUnifiedTopology: true, useNewUrlParser: true }
-  ).catch(error => console.log("Error connecting to MongoDB: " + error));
+mongoose.connect(
+    process.env.DBHOST, { useUnifiedTopology: true, useNewUrlParser: true }
+).catch(error => console.log("Error connecting to MongoDB: " + error));
 
 mongoose.connection.once('open', () => console.log('Connected succesfully to MongoDB'));
 
 //post, put, delete -> CRUD
-app.get("/api/welcome", (req, res)=>{
-    res.status(200).send({message:"Welcome tot the MEN RESTful API"})
+app.get("/api/welcome", (req, res) => {
+    res.status(200).send({ message: "Welcome tot the MEN RESTful API" })
 });
 
 app.use("/api/user", authRoutes);
@@ -36,7 +44,7 @@ app.use("/api/quotes", quoteRoutes);
 //defining port
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, function(){
+app.listen(PORT, function () {
     console.log("Server is runsadning on port:" + PORT);
 });
 
