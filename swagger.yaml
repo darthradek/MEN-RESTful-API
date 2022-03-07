@@ -21,13 +21,13 @@ components:
       properties:
         id:
           type: string
-        name:
+        content:
           type: string
-        description:
+        author:
           type: string
-        price:
-          type: number
-        inStock:
+        source:
+          type: string
+        isActive:
           type: boolean
     
     User:
